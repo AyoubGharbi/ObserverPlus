@@ -2,5 +2,5 @@ using UnityEngine;
 
 namespace ObserverPlus.Templates
 {
-	public class #SCRIPTNAME# : AEventListener<#SCRIPTRTYPE#> {}
+    public class #SCRIPTNAME#Listener : AEventListener<#SCRIPTRTYPE#> {}
 }

@@ -9,12 +9,12 @@ namespace ObserverPlus.Editor.Template
         private enum TemplateType
         {
             Event = 0,
-            Listener = 1
+            Listener = 1,
+            EventEditor = 2
         }
 
         private string _scriptName;
         private string _scriptType;
-        private string _baseCreationPath = string.Empty;
 
         [MenuItem("ObserverPlus/Create New Event Script")]
         public static void ShowWindow()
@@ -22,22 +22,29 @@ namespace ObserverPlus.Editor.Template
             GetWindow<TemplateCreationFlow>("New ObserverPlus Event");
         }
 
-        private void OnEnable()
+        private string GetBaseCreationPath(TemplateType templateType)
         {
-            _baseCreationPath = Path.Combine(Path.GetDirectoryName((Path.GetDirectoryName(Path.GetDirectoryName(AssetDatabase.GetAssetPath(MonoScript.FromScriptableObject(this)))))), "Data/");
+            string concreteFolder = templateType != TemplateType.EventEditor ? "Concrete/" : "Editor/Concrete/";
+            return Path.Combine(Path.GetDirectoryName((Path.GetDirectoryName(Path.GetDirectoryName(AssetDatabase.GetAssetPath(MonoScript.FromScriptableObject(this)))))), concreteFolder);
         }
 
         private void OnGUI()
         {
-            GUILayout.Label("Create New ObserverPlus Event Script", EditorStyles.boldLabel);
+            EditorGUILayout.HelpBox("This will create two scripts (event and event listener).", MessageType.Info);
 
+            GUILayout.Label("Create New Event Scripts", EditorStyles.boldLabel);
+
+            EditorGUILayout.BeginHorizontal();
             _scriptName = EditorGUILayout.TextField("Script Name", _scriptName);
+            EditorGUILayout.LabelField(new GUIContent("Event/EventListener.cs"));
+            EditorGUILayout.EndHorizontal();
             _scriptType = EditorGUILayout.TextField("Type", _scriptType);
 
             if (GUILayout.Button("Create Scripts"))
             {
                 CreateScript(TemplateType.Event);
                 CreateScript(TemplateType.Listener);
+                CreateScript(TemplateType.EventEditor);
 
                 CleanUp();
             }
@@ -50,14 +57,15 @@ namespace ObserverPlus.Editor.Template
             string template = File.ReadAllText(templatePath);
 
             // Replace the placeholders in the template with the actual values
-            template = template.Replace("#SCRIPTNAME#", $"{combinedScriptName}");
+            template = template.Replace("#SCRIPTNAME#", $"{_scriptName}");
             template = template.Replace("#SCRIPTRTYPE#", _scriptType);
 
             // Create the new script file
-            string filePath = $"{_baseCreationPath}{combinedScriptName}.cs";
+            string concretePath = GetBaseCreationPath(templateType);
+            string filePath = $"{concretePath}{combinedScriptName}.cs";
 
-            if (!Directory.Exists($"{_baseCreationPath}"))
-                Directory.CreateDirectory($"{_baseCreationPath}");
+            if (!Directory.Exists($"{concretePath}"))
+                Directory.CreateDirectory($"{concretePath}");
 
             File.WriteAllText(filePath, template);
         }
