@@ -4,6 +4,9 @@ using UnityEngine;
 
 namespace ObserverPlus.Editor.Template
 {
+    /// <summary>
+    /// Editor window for creating new ObserverPlus event scripts.
+    /// </summary>
     public class TemplateCreationFlow : EditorWindow
     {
         private enum TemplateType
