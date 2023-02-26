@@ -4,33 +4,45 @@ using UnityEngine.Events;
 namespace ObserverPlus
 {
     /// <summary>
-    /// Base class for all event listeners.
+    /// Base class for creating event listeners that can listen to events of type AEvent<T>.
     /// </summary>
     /// <typeparam name="T">The type of data that this listener is listening for.</typeparam>
     public abstract class AEventListener<T> : MonoBehaviour
     {
-        // The event that this listener is listening to.
-        [field: SerializeField] public AEvent<T> Event { get; set; }
+        /// <summary>
+        /// The event that this listener is listening to.
+        /// </summary>
+        [SerializeField] private AEvent<T> _event;
 
-        // The UnityEvent action to execute when the event is raised.
-        [field: SerializeField] public UnityEvent<T, T> UnityEventAction { get; set; } = new UnityEvent<T, T>();
+        /// <summary>
+        /// The UnityEvent action to execute when the event is raised.
+        /// </summary>
+        [SerializeField] private UnityEvent<T, T> _unityEventAction = new UnityEvent<T, T>();
 
-        // When the listener is enabled, register it to the event and set the previous event value.
+        /// <summary>
+        /// Register the listener to the event when the listener is enabled.
+        /// </summary>
         private void OnEnable()
         {
-            Event.RegisterListener(this);
+            _event.RegisterListener(this);
         }
 
-        // When the listener is disabled, unregister it from the event.
+        /// <summary>
+        /// Unregister the listener from the event when the listener is disabled.
+        /// </summary>
         private void OnDisable()
         {
-            Event.UnregisterListener(this);
+            _event.UnregisterListener(this);
         }
 
-        // Execute the UnityEvent action when the event is raised.
+        /// <summary>
+        /// Execute the UnityEvent action when the event is raised.
+        /// </summary>
+        /// <param name="eventValue">The current value of the event.</param>
+        /// <param name="previousValue">The previous value of the event.</param>
         public void OnEventRaised(T eventValue, T previousValue)
         {
-            UnityEventAction?.Invoke(eventValue, previousValue);
+            _unityEventAction?.Invoke(eventValue, previousValue);
         }
     }
 }

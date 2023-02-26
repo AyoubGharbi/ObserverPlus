@@ -19,5 +19,10 @@ namespace ObserverPlus.Examples
         {
             FloatFeedbackText.text = doubleValue.ToString();
         }
+
+        public void OnSomethingChanged()
+        {
+            FloatFeedbackText.text = "Something's Changed!";
+        }
     }
 }
