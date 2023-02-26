@@ -10,12 +10,12 @@ namespace ObserverPlus.Examples
     {
         [field:SerializeField] public TextMeshProUGUI FloatFeedbackText { get; set; }
 
-        public void OnFloatChanged(float floatValue)
+        public void OnFloatChanged(float floatValue, float prevValue)
         {
-            FloatFeedbackText.text = floatValue.ToString();
+            FloatFeedbackText.text = $"Prev {prevValue}, Val {floatValue}";
         }
 
-        public void OnDoubleChanged(double doubleValue)
+        public void OnDoubleChanged(double doubleValue, double prevValue)
         {
             FloatFeedbackText.text = doubleValue.ToString();
         }
