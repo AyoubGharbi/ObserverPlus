@@ -1,0 +1,7 @@
+using UnityEngine;
+
+namespace ObserverPlus.Templates
+{
+	[CreateAssetMenu(menuName = BasePath + nameof(#SCRIPTNAME#), fileName = nameof(#SCRIPTNAME#))]
+	public class #SCRIPTNAME# : AEvent<#SCRIPTRTYPE#> {}
+}
