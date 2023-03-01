@@ -1,8 +1,0 @@
-using ObserverPlus.Editor;
-using UnityEditor;
-
-namespace ObserverPlus.Templates
-{
-    [CustomEditor(typeof(#SCRIPTNAME#Event))]
-    public class #SCRIPTNAME#EventEditor : AEventEditor<#SCRIPTRTYPE#> {}
-}

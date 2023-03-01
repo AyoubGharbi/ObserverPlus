@@ -1,6 +1,0 @@
-using UnityEngine;
-
-namespace ObserverPlus.Templates
-{
-    public class #SCRIPTNAME#Listener : AEventListener<#SCRIPTRTYPE#> {}
-}
