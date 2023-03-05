@@ -25,13 +25,25 @@ using UnityEngine.UI;
 
 namespace ObserverPlus.Examples
 {
-    public class CoinsLogic : ALogic<int>
+    /// <summary>
+    /// A progress bar that displays a value as a fill amount.
+    /// </summary>
+    public class ProgressBarUI : MonoBehaviour
     {
-        [field: SerializeField] public Button AddCoinsBtn { get; set; }
+        /// <summary>
+        /// The Image component that displays the progress bar.
+        /// </summary>
+        [field: SerializeField] public Image ProgressBarImg { get; set; }
 
-        public void AddCoins()
+        /// <summary>
+        /// Sets the fill amount of the progress bar when a new progress value is received.
+        /// </summary>
+        /// <param name="progressValue">The new progress value.</param>
+        /// <param name="prevValue">The previous progress value.</param>
+        public void OnNewProgressBarValue(float progressValue, float prevValue)
         {
-            LogicValue += 10;
+            // Update the fill amount of the progress bar.
+            ProgressBarImg.fillAmount = progressValue;
         }
     }
 }

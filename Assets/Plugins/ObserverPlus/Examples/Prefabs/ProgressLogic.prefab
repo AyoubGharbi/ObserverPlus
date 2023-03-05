@@ -44,4 +44,4 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: e9492b75ac316bc40b8046f5bc0f4973, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  <FloatEvent>k__BackingField: {fileID: 11400000, guid: c1d88b17992aa8b48b0494aa7884705e, type: 2}
+  <OnLogicChangedEvent>k__BackingField: {fileID: 11400000, guid: c1d88b17992aa8b48b0494aa7884705e, type: 2}

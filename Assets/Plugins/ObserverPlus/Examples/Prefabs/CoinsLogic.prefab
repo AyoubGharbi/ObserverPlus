@@ -146,5 +146,5 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: d6597ec7976b6ae499be645df030faf9, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  <OnLogicChangedEvent>k__BackingField: {fileID: 11400000, guid: 93d6e3e83b6544c44b97d115c74de680, type: 2}
   <AddCoinsBtn>k__BackingField: {fileID: 3724486248187749062}
-  <OnCoinsChangedEvent>k__BackingField: {fileID: 11400000, guid: 93d6e3e83b6544c44b97d115c74de680, type: 2}

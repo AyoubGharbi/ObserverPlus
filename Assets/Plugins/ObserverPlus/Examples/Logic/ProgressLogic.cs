@@ -27,24 +27,18 @@ namespace ObserverPlus.Examples
     /// <summary>
     /// Tap on screen to change float value.
     /// </summary>
-    public class ProgressLogic : MonoBehaviour
+    public class ProgressLogic : ALogic<float>
     {
-        [field: SerializeField] public FloatEvent FloatEvent { get; set; }
-
-        private float _initialValue = default;
-
         private void Update()
         {
             if (Input.GetMouseButtonDown(0))
             {
-                _initialValue = Mathf.Clamp01(_initialValue + 0.04f);
-                FloatEvent.Raise(_initialValue);
+                LogicValue = Mathf.Clamp01(LogicValue + 0.04f);
             }
 
             if (Input.GetMouseButtonDown(1))
             {
-                _initialValue = Mathf.Clamp01(_initialValue - 0.04f);
-                FloatEvent.Raise(_initialValue);
+                LogicValue = Mathf.Clamp01(LogicValue - 0.04f);
             }
         }
     }

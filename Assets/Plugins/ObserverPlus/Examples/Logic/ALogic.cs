@@ -21,29 +21,23 @@
  */
 
 using UnityEngine;
-using UnityEngine.UI;
 
 namespace ObserverPlus.Examples
 {
-    /// <summary>
-    /// A progress bar that displays a value as a fill amount.
-    /// </summary>
-    public class ProgressBar : MonoBehaviour
+    public abstract class ALogic<T> : MonoBehaviour
     {
-        /// <summary>
-        /// The Image component that displays the progress bar.
-        /// </summary>
-        [field: SerializeField] public Image ProgressBarImg { get; set; }
+        [field: SerializeField] public AEvent<T> OnLogicChangedEvent { get; set; }
 
-        /// <summary>
-        /// Sets the fill amount of the progress bar when a new progress value is received.
-        /// </summary>
-        /// <param name="progressValue">The new progress value.</param>
-        /// <param name="prevValue">The previous progress value.</param>
-        public void OnNewProgressBarValue(float progressValue, float prevValue)
+        protected T _logicValue = default;
+
+        public T LogicValue
         {
-            // Update the fill amount of the progress bar.
-            ProgressBarImg.fillAmount = progressValue;
+            get { return _logicValue; }
+            set
+            {
+                _logicValue = value;
+                OnLogicChangedEvent?.Raise(_logicValue);
+            }
         }
     }
 }
