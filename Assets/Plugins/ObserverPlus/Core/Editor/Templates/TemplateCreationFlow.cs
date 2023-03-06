@@ -20,7 +20,9 @@
  * THE SOFTWARE.
  */
 
+using System;
 using System.IO;
+using System.Linq;
 using UnityEditor;
 using UnityEngine;
 
@@ -38,8 +40,8 @@ namespace ObserverPlus.Editor.Template
             EventEditor
         }
 
-        private string _scriptName;
-        private string _scriptType;
+        private string _scriptName = string.Empty;
+        private string _scriptType = string.Empty;
 
         private const string PluginsPath = "Plugins/ObserverPlus";
         private const string TemplatesPath = "Core/Editor/Templates";
@@ -66,10 +68,28 @@ namespace ObserverPlus.Editor.Template
             GUILayout.Label("Create New Event Scripts", EditorStyles.boldLabel);
 
             EditorGUILayout.BeginHorizontal();
-            _scriptName = EditorGUILayout.TextField("Script Name", _scriptName);
+            _scriptName = EditorGUILayout.TextField("Script Name:", _scriptName);
             EditorGUILayout.LabelField(new GUIContent("Event/EventListener.cs"));
             EditorGUILayout.EndHorizontal();
-            _scriptType = EditorGUILayout.TextField("Type", _scriptType);
+
+            GUILayout.Space(10);
+
+            EditorGUILayout.BeginHorizontal();
+            _scriptType = EditorGUILayout.TextField("Type:", _scriptType);
+
+            if (GUILayout.Button("Select Primitive Type"))
+            {
+                GenericMenu menu = new();
+                foreach (Type type in GetPrimitiveTypes())
+                {
+                    string typeName = type.Name.ToLower();
+                    menu.AddItem(new GUIContent(typeName), false, () => _scriptType = typeName);
+                }
+                menu.DropDown(new Rect(Event.current.mousePosition, Vector2.zero));
+            }
+            EditorGUILayout.EndHorizontal();
+
+            GUILayout.Space(10);
 
             if (GUILayout.Button("Create Scripts"))
             {
@@ -80,6 +100,14 @@ namespace ObserverPlus.Editor.Template
                 AssetDatabase.Refresh();
                 Close();
             }
+        }
+
+        private Type[] GetPrimitiveTypes()
+        {
+            return (from assembly in AppDomain.CurrentDomain.GetAssemblies()
+                    from type in assembly.GetTypes()
+                    where type.IsPrimitive
+                    select type).ToArray();
         }
 
         private void CreateScript(TemplateType templateType)
